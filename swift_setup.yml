@@ -18,7 +18,7 @@ swift:
   hash_path_suffix: asdfnasdjkfnsdkfjnsd
   hash_path_prefix: asldfnslfn234klnslkd
   #syslog_host: 10.1.1.1:514
-  git_repo: 'https://github.com/matthewoliver/swift'
+  git_repo: 'https://github.com/openstack/swift.git'
   git_tag: sharding_lock
   memcache_servers:
     - 192.168.0.17:11211
