@@ -1,9 +1,9 @@
 ---
-- name: something
+- name: partition, format, mount cinder volumes
   hosts: all
   become: yes
   tasks:
-  - name: partitioning disks
+  - name: partition disks
     parted:
       device: "{{ item }}"
       number: 1
