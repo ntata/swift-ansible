@@ -1,0 +1,15 @@
+---
+- name: Mount devices
+  hosts: all
+  become: yes
+  tasks:
+  - name: mount drives
+    mount:
+      path: "/mnt/{{ item.0 }}"
+      src: "LABEL=disk{{ item.1 }}"
+      fstype: xfs
+      state: mounted
+      opts: "noatime,nodiratime,nobarrier,logbufs=8"
+    with_together:
+      - [ 'vdc1', 'vdd1', 'vde1', 'vdf1' ]
+      - [ 1, 2, 3, 4]
