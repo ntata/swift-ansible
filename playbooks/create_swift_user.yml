@@ -1,0 +1,29 @@
+---
+- name: create user group for swift
+  hosts: all
+  become: yes
+  tasks:
+  - name: create group named swift
+    group:
+      name: swift
+      state: present
+  - name: passwordless access to group swift
+    lineinfile:
+      dest: /etc/sudoers
+      state: present
+      regexp: '^%swift'
+      line: '%swift ALL=(ALL) NOPASSWD: ALL'
+  - name: create user swift in group swift
+    user:
+      name: swift
+      groups: swift
+      createhome: yes
+      shell: /bin/bash
+  - name: copy ssh public key
+    copy:
+      src: /home/ubuntu/.ssh/authorized_keys 
+      dest: /home/swift/.ssh/
+      owner: swift
+      group: swift
+      mode: 0600
+
