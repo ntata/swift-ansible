@@ -1,0 +1,21 @@
+---
+- name: something
+  hosts: all
+  become: yes
+  tasks:
+  - name: partitioning disks
+    parted:
+      device: "{{ item }}"
+      number: 1
+      state: present
+    with_items:
+      - [ '/dev/vdc', '/dev/vdd', '/dev/vde', '/dev/vdf' ]
+  - name: make filesystem
+    filesystem:
+      fstype: xfs
+      force: yes
+      dev: "{{ item.0 }}"
+      opts: -L "disk{{ item.1 }}"
+    with_together:
+      - [ '/dev/vdc1', '/dev/vdd1', '/dev/vde1', '/dev/vdf1' ]
+      - [ 1, 2, 3, 4 ]
